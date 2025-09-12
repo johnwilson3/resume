@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John R. Wilson | IT Support Specialist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1f2937;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @keyframes loading-animation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border-left-color: #ffffff;
+            animation: loading-animation 1s infinite linear;
+        }
+        .loading .loading-spinner {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div>
+                <h1 class="text-xl font-bold text-gray-800">John R. Wilson</h1>
+                <p class="text-sm text-gray-500">Help Desk Technician | IT Support Specialist</p>
+            </div>
+            <div class="hidden md:flex space-x-4">
+                <a href="#summary" class="text-gray-600 hover:text-blue-600">Summary</a>
+                <a href="#skills" class="text-gray-600 hover:text-blue-600">Skills</a>
+                <a href="#experience" class="text-gray-600 hover:text-blue-600">Experience</a>
+                <a href="#projects" class="text-gray-600 hover:text-blue-600">Projects</a>
+                <a href="#certs" class="text-gray-600 hover:text-blue-600">Certifications</a>
+            </div>
+             <button id="download-pdf" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 flex items-center justify-center">
+                <span class="text-content">Download PDF</span>
+             </button>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-600 hover:text-blue-600 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#summary" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Summary</a>
+            <a href="#skills" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Skills</a>
+            <a href="#experience" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Experience</a>
+            <a href="#projects" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Projects</a>
+            <a href="#certs" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Certifications</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="resume-content" class="container mx-auto px-6 py-12">
+        <!-- Profile Section -->
+        <section id="summary" class="flex flex-col md:flex-row items-center mb-12 bg-white p-8 rounded-xl shadow-md">
+            <div class="md:w-1/4 mb-6 md:mb-0">
+                <!-- Replace with your professional headshot -->
+                <img class="rounded-full w-48 h-48 mx-auto object-cover" src="Portrait (smaller version).jpg" alt="John R. Wilson">
+            </div>
+            <div class="md:w-3/4 md:pl-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Professional Summary</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    Highly motivated Technical Professional with CompTIA A+ and Network+ certifications and extensive hands-on experience in systems administration, network engineering, and modern application deployment. Proven ability to manage complex projects, troubleshoot intricate systems, and provide comprehensive operational support. Actively pursuing AWS and Microsoft certifications to specialize existing skills for a role in cloud infrastructure and modern endpoint management.
+                </p>
+                 <div class="mt-4 text-sm text-gray-500">
+                    <p class="mb-1"><span class="font-bold">Location:</span> Florence, KY</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="mb-12">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Technical Skills</h2>
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                 <div class="chart-container mb-8">
+                    <canvas id="skillsChart"></canvas>
+                </div>
+                <div id="skill-filters" class="flex flex-wrap justify-center gap-2 mb-6"></div>
+                <div id="skills-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="mb-12">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Professional Experience</h2>
+            <div class="space-y-6">
+                 <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-bold text-gray-800">Director of Operations</h3>
+                    <p class="text-md text-gray-500">[Your Company Name], Florence, KY | 2003 - Present</p>
+                    <ul class="mt-4 list-disc list-inside text-gray-600 space-y-2">
+                        <li>Serves as the sole IT and operations lead, providing hands-on technical support for all hardware, software, and network infrastructure to ensure <strong>100% business uptime</strong>.</li>
+                        <li>Executed a critical database migration from Microsoft Access to the <strong>KonnexMe cloud suite</strong>, managing the full project lifecycle.</li>
+                        <li>Manages data integrity by cleansing, formatting, and importing large client datasets from Excel into the company's cloud database.</li>
+                        <li>Coordinates all logistics and technical preparations for client-facing seminars, ensuring all marketing materials and equipment are deployed effectively.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="mb-12">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Home Lab & Technical Projects</h2>
+            <div id="projects-list" class="space-y-6"></div>
+        </section>
+
+        <!-- Certifications Timeline -->
+        <section id="certs" class="mb-12">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Certifications & Professional Development</h2>
+             <div class="bg-white p-6 rounded-xl shadow-md">
+                <div id="certs-timeline-container" class="relative border-l-4 border-blue-200 ml-4 py-4"></div>
+             </div>
+        </section>
+        
+        <!-- Education Section -->
+        <section id="education">
+             <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Education</h2>
+              <div class="bg-white p-6 rounded-xl shadow-md grid md:grid-cols-2 gap-6">
+                  <div class="border-l-4 border-blue-500 pl-4">
+                      <h3 class="text-lg font-bold">Master Certificate, Integrated Supply Chain Management</h3>
+                      <p class="text-gray-500">Michigan State University, 2014</p>
+                  </div>
+                   <div class="border-l-4 border-blue-500 pl-4">
+                      <h3 class="text-lg font-bold">Bachelor of Business Administration</h3>
+                      <p class="text-gray-500">University of Kentucky, 2006</p>
+                      <p class="text-sm text-gray-500">Majors: Decision Science & Information Systems, Management</p>
+                  </div>
+              </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white mt-12 py-6">
+        <div class="container mx-auto text-center text-gray-500 text-sm">
+            &copy; 2025 John R. Wilson. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Data for the resume
+            const skills = [
+                { name: 'Proxmox VE', category: 'Cloud & Virtualization' },
+                { name: 'Docker', category: 'Cloud & Virtualization' },
+                { name: 'TrueNAS', category: 'Cloud & Virtualization' },
+                { name: 'Authentik (IAM/SSO)', category: 'Security' },
+                { name: 'AWS (IAM)', category: 'Cloud & Virtualization' },
+                { name: 'Microsoft 365', category: 'Cloud & Virtualization' },
+                { name: 'Entra ID', category: 'Security' },
+                { name: 'Microsoft Intune', category: 'Systems & Hardware' },
+                { name: 'Ubiquiti UniFi', category: 'Networking' },
+                { name: 'VLAN Segmentation', category: 'Networking' },
+                { name: 'Traefik Proxy', category: 'Networking' },
+                { name: 'Cloudflare', category: 'Networking' },
+                { name: 'VPN (WireGuard/Tailscale)', category: 'Networking' },
+                { name: 'mTLS', category: 'Security' },
+                { name: 'Home Assistant (YAML)', category: 'Automation' },
+                { name: 'Proxmox Backups', category: 'Automation' },
+                { name: 'Docker Compose', category: 'Automation' },
+                { name: 'Windows Environments', category: 'Systems & Hardware' },
+                { name: 'Debian/Ubuntu', category: 'Systems & Hardware' },
+                { name: 'Custom PC/Server Assembly', category: 'Systems & Hardware' },
+                { name: 'Hardware Troubleshooting', category: 'Systems & Hardware' },
+                { name: 'Data Migration', category: 'Data & Operations' },
+                { name: 'Inventory Management', category: 'Data & Operations' },
+                { name: 'Project Logistics', category: 'Data & Operations' }
+            ];
+
+            const projects = [
+                 {
+                    title: 'Full-Stack Infrastructure Engineering',
+                    description: 'Designed and manage a full-stack home lab on custom-built servers using <strong>Ubiquiti</strong> networking, a <strong>Proxmox</strong> virtualization layer, VMs (Ubuntu, TrueNAS), and a portfolio of <strong>40+ containerized applications</strong> deployed via Docker Compose.'
+                },
+                {
+                    title: 'Application Security & Identity Management',
+                    description: 'Architected a multi-layered security model for self-hosted services using <strong>Traefik</strong> as a reverse proxy, <strong>Cloudflare</strong> for edge security, and <strong>Authentik</strong> for centralized Identity and Access Management (IAM) and Single Sign-On (SSO).'
+                },
+                {
+                    title: 'Advanced Systems Troubleshooting',
+                    description: 'Diagnosing a complex electrical systems issue on a custom Audi S4 Avant by creating detailed troubleshooting matrices and interpreting factory repair manuals to systematically pinpoint component failures.'
+                },
+                {
+                    title: 'Complex Project Management',
+                    description: 'Managed the full lifecycle of parting out five complete vehicles, demonstrating expert-level project management by tracking the inventory, sale, and shipment of <strong>thousands of individual components</strong>.'
+                }
+            ];
+
+            const certs = [
+                {
+                    title: 'CompTIA A+ Certified',
+                    date: 'August 2024',
+                    status: 'Achieved'
+                },
+                 {
+                    title: 'CompTIA Network+ Certified',
+                    date: 'August 2025',
+                    status: 'Achieved'
+                },
+                {
+                    title: 'AWS Certified Cloud Practitioner (CLF-C02)',
+                    date: 'Est. October 2025',
+                    status: 'In Progress'
+                },
+                {
+                    title: 'Microsoft 365 Endpoint Administrator (MD-102)',
+                    date: 'Est. December 2025',
+                    status: 'Studying'
+                }
+            ];
+
+            // --- Chart.js Skills Chart ---
+            const ctx = document.getElementById('skillsChart').getContext('2d');
+            const skillCategories = [...new Set(skills.map(s => s.category))];
+            const skillCounts = skillCategories.map(cat => skills.filter(s => s.category === cat).length);
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: skillCategories,
+                    datasets: [{
+                        label: 'Number of Skills',
+                        data: skillCounts,
+                        backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Skill Distribution by Category'
+                        }
+                    }
+                }
+            });
+
+            // --- Dynamic Skills List & Filters ---
+            const skillsList = document.getElementById('skills-list');
+            const skillFilters = document.getElementById('skill-filters');
+            let activeFilter = 'All';
+
+            const renderSkills = () => {
+                skillsList.innerHTML = '';
+                const filteredSkills = activeFilter === 'All' ? skills : skills.filter(s => s.category === activeFilter);
+                filteredSkills.forEach(skill => {
+                    const skillEl = document.createElement('div');
+                    skillEl.className = 'bg-gray-100 p-3 rounded-lg text-center text-sm text-gray-700';
+                    skillEl.textContent = skill.name;
+                    skillsList.appendChild(skillEl);
+                });
+            };
+
+            const renderSkillFilters = () => {
+                const categories = ['All', ...skillCategories];
+                skillFilters.innerHTML = '';
+                categories.forEach(cat => {
+                    const button = document.createElement('button');
+                    button.textContent = cat;
+                    button.className = `px-4 py-2 text-sm rounded-full transition duration-200 ${activeFilter === cat ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`;
+                    button.onclick = () => {
+                        activeFilter = cat;
+                        renderSkillFilters();
+                        renderSkills();
+                    };
+                    skillFilters.appendChild(button);
+                });
+            };
+
+            // --- Projects List ---
+            const projectsList = document.getElementById('projects-list');
+            const renderProjects = () => {
+                projectsList.innerHTML = '';
+                projects.forEach(project => {
+                    const projectEl = document.createElement('div');
+                    projectEl.className = 'bg-white p-6 rounded-xl shadow-md';
+                    projectEl.innerHTML = `
+                        <h3 class="text-xl font-bold text-gray-800">${project.title}</h3>
+                        <p class="mt-2 text-gray-600">${project.description}</p>
+                    `;
+                    projectsList.appendChild(projectEl);
+                });
+            };
+            
+            // --- Certs Timeline ---
+            const certsContainer = document.getElementById('certs-timeline-container');
+            const renderCertsTimeline = () => {
+                certsContainer.innerHTML = '';
+                certs.forEach((cert, index) => {
+                    const dotColor = cert.status === 'Achieved' ? 'bg-green-500' : 'bg-yellow-500';
+                    const timelineEl = document.createElement('div');
+                    timelineEl.className = 'mb-8 flex items-center';
+                    timelineEl.innerHTML = `
+                        <div class="absolute w-8 h-8 ${dotColor} rounded-full -left-4 border-4 border-white"></div>
+                        <div class="ml-10 bg-gray-50 p-4 rounded-lg w-full">
+                           <h4 class="font-bold text-gray-800">${cert.title}</h4>
+                           <p class="text-sm text-gray-500">${cert.date} - <span class="font-semibold">${cert.status}</span></p>
+                        </div>
+                    `;
+                     certsContainer.appendChild(timelineEl);
+                });
+            };
+
+            // --- PDF Download ---
+            const downloadButton = document.getElementById('download-pdf');
+            downloadButton.addEventListener('click', async () => {
+                const button = downloadButton;
+                const content = button.querySelector('.text-content');
+                const originalText = content.innerHTML;
+                
+                // Add loading spinner
+                button.classList.add('loading');
+                content.innerHTML = '<div class="loading-spinner"></div>';
+                
+                const element = document.getElementById('resume-content');
+                const opt = {
+                    margin:       0.5,
+                    filename:     'John_Wilson_Resume.pdf',
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2, useCORS: true },
+                    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+                };
+                try {
+                    await html2pdf().from(element).set(opt).save();
+                } catch (error) {
+                    console.error('PDF generation failed:', error);
+                    alert('Failed to generate PDF. Please try again.');
+                } finally {
+                    // Restore button state
+                    button.classList.remove('loading');
+                    content.innerHTML = originalText;
+                }
+            });
+
+            // --- Mobile Menu ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            document.querySelectorAll('#mobile-menu a, nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        document.querySelector(this.getAttribute('href')).scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                        if (!mobileMenu.classList.contains('hidden')) {
+                             mobileMenu.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+
+            // Initial render
+            renderSkillFilters();
+            renderSkills();
+            renderProjects();
+            renderCertsTimeline();
+        });
+    </script>
+</body>
+</html>
