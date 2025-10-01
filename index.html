@@ -337,37 +337,12 @@
                 });
             };
 
-            // --- PDF Download ---
-            const downloadButton = document.getElementById('download-pdf');
-            downloadButton.addEventListener('click', async () => {
-                const button = downloadButton;
-                const content = button.querySelector('.text-content');
-                const originalText = content.innerHTML;
-                
-                // Add loading spinner
-                button.classList.add('loading');
-                content.innerHTML = '<div class="loading-spinner"></div>';
-                
-                const element = document.getElementById('resume-content');
-                const opt = {
-                    margin:       0.5,
-                    filename:     'John_Wilson_Resume.pdf',
-                    image:        { type: 'jpeg', quality: 0.98 },
-                    html2canvas:  { scale: 2, useCORS: true },
-                    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-                };
-                try {
-                    await html2pdf().from(element).set(opt).save();
-                } catch (error) {
-                    console.error('PDF generation failed:', error);
-                    alert('Failed to generate PDF. Please try again.');
-                } finally {
-                    // Restore button state
-                    button.classList.remove('loading');
-                    content.innerHTML = originalText;
-                }
-            });
-
+// --- PDF Download ---
+const downloadButton = document.getElementById('download-pdf');
+downloadButton.addEventListener('click', () => {
+    const pdfUrl = 'https://www.johnwilson.tech/John_Wilson_Resume.pdf'; //
+    window.open(pdfUrl, '_blank');
+});
             // --- Mobile Menu ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
