@@ -86,10 +86,10 @@
             <div class="md:w-3/4 md:pl-8">
                 <h2 class="text-3xl font-bold text-gray-800 mb-2">Professional Summary</h2>
                 <p class="text-gray-600 leading-relaxed">
-                    Highly motivated Technical Professional with CompTIA A+ and Network+ certifications and extensive hands-on experience in systems administration, network engineering, and modern application deployment. Proven ability to manage complex projects, troubleshoot intricate systems, and provide comprehensive operational support. Actively pursuing AWS and Microsoft certifications to specialize existing skills for a role in cloud infrastructure and modern endpoint management.
+                    Highly motivated Technical Professional with CompTIA A+ and Network+ certifications and extensive hands-on experience in systems administration, network engineering, and modern application deployment. Proven ability to manage complex projects, troubleshoot intricate systems, and provide comprehensive operational support. Actively pursuing advanced security and networking certifications to build upon a strong foundation of practical IT skills.
                 </p>
                  <div class="mt-4 text-sm text-gray-500">
-                    <p class="mb-1"><span class="font-bold">Location:</span> Cincinnati, OH</p>
+                    <p class="mb-1"><span class="font-bold">Location:</span> Florence, KY</p>
                 </div>
             </div>
         </section>
@@ -111,8 +111,8 @@
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Professional Experience</h2>
             <div class="space-y-6">
                  <div class="bg-white p-6 rounded-xl shadow-md">
-                    <h3 class="text-xl font-bold text-gray-800">Operations Coordinator</h3>
-                    <p class="text-md text-gray-500">Seniors First Resources, Florence, KY | 2003 - Present</p>
+                    <h3 class="text-xl font-bold text-gray-800">Director of Operations</h3>
+                    <p class="text-md text-gray-500">[Your Company Name], Florence, KY | 2003 - Present</p>
                     <ul class="mt-4 list-disc list-inside text-gray-600 space-y-2">
                         <li>Serves as the sole IT and operations lead, providing hands-on technical support for all hardware, software, and network infrastructure to ensure <strong>100% business uptime</strong>.</li>
                         <li>Executed a critical database migration from Microsoft Access to the <strong>KonnexMe cloud suite</strong>, managing the full project lifecycle.</li>
@@ -159,31 +159,6 @@
         <div class="container mx-auto text-center text-gray-500 text-sm">
             &copy; 2025 John R. Wilson. All Rights Reserved.
         </div>
-<!-- Contact Form Section -->
-<section id="contact" class="container mx-auto px-6 py-12">
-    <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Contact Me</h2>
-    <div class="max-w-xl mx-auto bg-white p-8 rounded-xl shadow-md">
-        <form action="https://formspree.io/f/xnnbrzyg" method="POST">
-            <div class="mb-4">
-                <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
-                <input type="text" name="name" id="name" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
-            <div class="mb-4">
-                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                <input type="email" name="_replyto" id="email" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
-            <div class="mb-6">
-                <label for="message" class="block text-gray-700 text-sm font-bold mb-2">Message</label>
-                <textarea name="message" id="message" required rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
-            </div>
-            <div class="flex items-center justify-center">
-                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline transition duration-300">
-                    Send Message
-                </button>
-            </div>
-        </form>
-    </div>
-</section>        
     </footer>
 
     <script>
@@ -196,8 +171,6 @@
                 { name: 'Authentik (IAM/SSO)', category: 'Security' },
                 { name: 'AWS (IAM)', category: 'Cloud & Virtualization' },
                 { name: 'Microsoft 365', category: 'Cloud & Virtualization' },
-                { name: 'Entra ID', category: 'Security' },
-                { name: 'Microsoft Intune', category: 'Systems & Hardware' },
                 { name: 'Ubiquiti UniFi', category: 'Networking' },
                 { name: 'VLAN Segmentation', category: 'Networking' },
                 { name: 'Traefik Proxy', category: 'Networking' },
@@ -247,13 +220,13 @@
                     status: 'Achieved'
                 },
                 {
-                    title: 'AWS Certified Cloud Practitioner (CLF-C02)',
-                    date: 'Est. October 2025',
+                    title: 'Google Cybersecurity Professional Certificate',
+                    date: 'Est. November 2025',
                     status: 'In Progress'
                 },
                 {
-                    title: 'Microsoft 365 Endpoint Administrator (MD-102)',
-                    date: 'Est. December 2025',
+                    title: 'CompTIA Security+ Certified',
+                    date: 'Est. January 2026',
                     status: 'Studying'
                 }
             ];
@@ -364,12 +337,37 @@
                 });
             };
 
-// --- PDF Download ---
-const downloadButton = document.getElementById('download-pdf');
-downloadButton.addEventListener('click', () => {
-    const pdfUrl = 'https://www.johnwilson.tech/John_Wilson_Resume.pdf'; //
-    window.open(pdfUrl, '_blank');
-});
+            // --- PDF Download ---
+            const downloadButton = document.getElementById('download-pdf');
+            downloadButton.addEventListener('click', async () => {
+                const button = downloadButton;
+                const content = button.querySelector('.text-content');
+                const originalText = content.innerHTML;
+                
+                // Add loading spinner
+                button.classList.add('loading');
+                content.innerHTML = '<div class="loading-spinner"></div>';
+                
+                const element = document.getElementById('resume-content');
+                const opt = {
+                    margin:       0.5,
+                    filename:     'John_Wilson_Resume.pdf',
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2, useCORS: true },
+                    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+                };
+                try {
+                    await html2pdf().from(element).set(opt).save();
+                } catch (error) {
+                    console.error('PDF generation failed:', error);
+                    alert('Failed to generate PDF. Please try again.');
+                } finally {
+                    // Restore button state
+                    button.classList.remove('loading');
+                    content.innerHTML = originalText;
+                }
+            });
+
             // --- Mobile Menu ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
